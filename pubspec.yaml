@@ -1,0 +1,23 @@
+name: demo_flutter_js
+description: A new Flutter project.
+version: 1.0.0
+
+environment:
+  sdk: ^3.4.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_js: ^0.8.1
+  reflectable: ^4.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.11
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/js/proxy.js
