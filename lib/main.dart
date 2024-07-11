@@ -1,3 +1,4 @@
+import 'package:demo_flutter_js/coder/index.dart';
 import 'package:flutter/material.dart';
 import 'model.reflectable.dart';
 import 'js.dart';
@@ -38,13 +39,21 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              child: const Text('基本使用'),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => const CoderPage(),
+                ),
+              ),
+              child: const Text('edit and evaluate js in app'),
+            ),
+            ElevatedButton(
+              child: const Text('basic usage'),
               onPressed: ()  {
                  testQuickJS();
               },
             ),
             ElevatedButton(
-              child: const Text('模块'),
+              child: const Text('module'),
               onPressed: ()  {
                 testModule();
               },
@@ -56,19 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ElevatedButton(
-              child: const Text('模块'),
-              onPressed: ()  {
-                testModule();
-              },
-            ),
-            ElevatedButton(
               child: const Text('Extra JS API'),
               onPressed: ()  {
                 testExtraJSAPI();
               },
             ),
             ElevatedButton(
-              child: const Text('代理对象'),
+              child: const Text('proxy object'),
               onPressed: ()  {
                 testProxy();
               },

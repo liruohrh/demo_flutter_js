@@ -1,1 +1,3 @@
-- demo flutter_js + reflectable
+- demo flutter_js + reflectable.
+- I basically only tests windows app, other platform apps has not test(but I think it should have same result).
+  - click button, and observe console stdout
