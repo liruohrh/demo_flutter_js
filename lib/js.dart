@@ -90,6 +90,41 @@ forJsFunc(String code, List<dynamic> args, {String? sourceUrl}) async {
 
 toJsImmediateFunc(String funcBody) => "(async ()=>{\n$funcBody\n})()";
 
+/*
+flutter: ========================================
+flutter: start use
+flutter: set f1
+flutter: get f1
+flutter: "model.f1=sb"
+flutter: get $hello
+flutter: dart: invoke hello, args=[xxx]
+flutter: "model.$hello: hello xxx[sb]"
+flutter: get $sHello
+flutter: "Model.$sHellosHello sb"
+flutter: get $$newDartObject
+flutter: set nested
+flutter: get $$setProxy
+flutter: get nested
+flutter: get nested
+flutter: set f1
+flutter: get then
+flutter: get f1
+flutter: get nested
+flutter: get f1
+flutter: get nested
+flutter: 1.  stringResult={f1: sb, nested: {f1: nestedSB, nested: null}}
+flutter: 1.  rawResult=Instance of 'Future<dynamic>'
+flutter: ========================================
+flutter: get f1
+flutter: model.f1=sbsbsb
+flutter: set f1
+flutter: get $hello
+flutter: dart: invoke hello, args=[xxx]
+flutter: model.$hello=hello xxx[sb2]
+flutter: get $$get
+flutter: 2.  Model{f1: sb2, nested: null}
+flutter: 2.  Model{f1: sb2, nested: null}
+ */
 testProxy() async {
   print("=" * 40);
   //init
@@ -103,7 +138,7 @@ testProxy() async {
 
   //1. JS use Dart class
   var result = javaScriptRuntime.evaluate(toJsImmediateFunc("""
-  model = await Model();
+  model = Model();
   model.f1 = 'sb';
   console.log(JSON.stringify(`model.f1=\${model.f1}`));
   console.log(JSON.stringify(`model.\$hello: \${model.\$hello('xxx')}`));
@@ -111,7 +146,7 @@ testProxy() async {
   
   model2 = Model.\$\$newDartObject();
   model.nested = model2;
-  model.\$\$setProxy('nested', await Model(model.nested));
+  model.\$\$setProxy('nested', Model(model.nested));
   model.nested.f1 = 'nestedSB';
   return model;
   """), sourceUrl: "use1.js");
@@ -121,7 +156,7 @@ testProxy() async {
 
   //2. JS use Dart object reference(for Dart#Map-JS#Object)
   final model = Model("sbsbsb");
-  await forJsFunc("async (key, value) => {this[key]=await Model(value);}", ["model", model], sourceUrl: "global.js");
+  await forJsFunc("(key, value) => {this[key]=Model(value);}", ["model", model], sourceUrl: "global.js");
   print("=="*20);
   result = javaScriptRuntime.evaluate("""
   console.log(`model.f1=\${model.f1}`);

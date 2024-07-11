@@ -7,6 +7,7 @@
  * obj.$$get(): return DartObject
  * obj.$$setProxy(nestedPropertyName, await objClazzConstructorFunc(obj.nestedProperty));
  * objClazzConstructorFunc.newDartObject(): new a dartObject
+ * note: only can access exists property and method of DartClass(static or not).
  */
 function getProxy(
   target,
